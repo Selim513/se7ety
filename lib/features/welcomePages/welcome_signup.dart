@@ -3,12 +3,17 @@ import 'package:gap/gap.dart';
 import 'package:se7ety_app_1/core/font/app_font.dart';
 import 'package:se7ety_app_1/core/function/navigator.dart';
 import 'package:se7ety_app_1/core/utils/app_color.dart';
-import 'package:se7ety_app_1/features/SignUp/Doctors_SignUp/doctor_sign.dart';
-import 'package:se7ety_app_1/features/SignUp/patientSingUp/signInAs_patient.dart';
+import 'package:se7ety_app_1/features/SignUp/SinginPages/signInAs_patient.dart';
 
-class SignUpAs extends StatelessWidget {
+class SignUpAs extends StatefulWidget {
   const SignUpAs({super.key});
 
+  @override
+  State<SignUpAs> createState() => _SignUpAsState();
+}
+
+class _SignUpAsState extends State<SignUpAs> {
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +80,7 @@ class SignUpAs extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(20))),
                                 onPressed: () {
-                                  gotopush(context, const DoctorSignIn());
+                                  gotopush(context, const SignInPage(index: 0,));
                                 },
                                 child: Text(
                                   "دكتور",
@@ -94,7 +99,7 @@ class SignUpAs extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(20))),
                                 onPressed: () {
-                                  gotopush(context, const PatientSignin());
+                                  gotopush(context, const SignInPage(index: 1,));
                                 },
                                 child: Text(
                                   "مريض",

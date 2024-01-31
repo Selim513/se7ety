@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:se7ety_app_1/core/theme/theme.dart';
-import 'package:se7ety_app_1/splashscreen.dart';
+import 'package:se7ety_app_1/features/auth/auth_cubit.dart';
+import 'package:se7ety_app_1/features/complete_SignUp/complete_signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,13 +21,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: appTheme,
-      debugShowCheckedModeBanner: false,
-      home: const Scaffold(body: SplashScreen()),
-      builder: (context, child) {
-        return Directionality(textDirection: TextDirection.rtl, child: child!);
-      },
+    return BlocProvider(
+      create: (context) => AuthCubit(),
+      child: MaterialApp(
+        theme: appTheme,
+        debugShowCheckedModeBanner: false,
+        home: const Scaffold(body: CompleteRegister()),
+        builder: (context, child) {
+          return Directionality(
+              textDirection: TextDirection.rtl, child: child!);
+        },
+      ),
     );
   }
 }

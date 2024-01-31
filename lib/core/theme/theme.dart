@@ -15,14 +15,15 @@ final appTheme = ThemeData(
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       focusedBorder: const OutlineInputBorder(
+        borderSide: BorderSide.none,
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       errorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(style: BorderStyle.solid, color: Colors.red),
+        borderSide: BorderSide.none,
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       focusedErrorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.red),
+        borderSide: BorderSide.none,
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
     ),
