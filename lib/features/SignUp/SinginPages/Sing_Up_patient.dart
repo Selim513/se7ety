@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:se7ety_app_1/core/font/app_font.dart';
+import 'package:se7ety_app_1/core/function/email_validate.dart';
 import 'package:se7ety_app_1/core/function/navigator.dart';
 import 'package:se7ety_app_1/core/utils/app_color.dart';
 import 'package:se7ety_app_1/features/SignUp/SinginPages/signInAs_patient.dart';
@@ -98,9 +99,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       textAlign: TextAlign.end,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'يجب ان تدخل بريد الكتروني صالح';
+                          return 'قم بادخال الايميل الخاص بك';
+                        } else if (!emailValidate(value)) {
+                          return 'من فضلك ادخل الايميل صحيحا';
+                        } else {
+                          return null;
                         }
-                        return null;
                       },
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(

@@ -9,11 +9,9 @@ class AuthCubit extends Cubit<AuthStates> {
   Login(String email, String password) async {
     emit(LoadingLoginAuth());
     try {
-      final credential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password
-      );
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      emit(SuccessLoginAuth());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         emit(ErrorLoginAuth(Error: 'لقد ادخلت كلمه مرور ضعيفه'));

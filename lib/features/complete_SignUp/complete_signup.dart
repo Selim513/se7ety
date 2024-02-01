@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:se7ety_app_1/core/font/app_font.dart';
 import 'package:se7ety_app_1/core/utils/app_color.dart';
+import 'package:se7ety_app_1/features/complete_SignUp/specializations.dart';
 
 class CompleteRegister extends StatefulWidget {
   const CompleteRegister({super.key});
@@ -11,6 +15,9 @@ class CompleteRegister extends StatefulWidget {
 }
 
 class _CompleteRegisterState extends State<CompleteRegister> {
+  String? imagePath;
+
+  String specialized = ' التخصص';
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -33,9 +40,11 @@ class _CompleteRegisterState extends State<CompleteRegister> {
                 children: [
                   Stack(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 70,
-                        backgroundImage: AssetImage('asset/background.png'),
+                        backgroundImage: (imagePath != null)
+                            ? FileImage(File(imagePath!)) as ImageProvider
+                            : const AssetImage('asset/background.png'),
                       ),
                       Positioned(
                         right: 1,
@@ -43,7 +52,11 @@ class _CompleteRegisterState extends State<CompleteRegister> {
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
                           child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  pickImage();
+                                });
+                              },
                               icon: Icon(
                                 Icons.camera_alt_rounded,
                                 color: Appcolors.primaryColor,
@@ -59,9 +72,43 @@ class _CompleteRegisterState extends State<CompleteRegister> {
                     children: [Text('التخصص')],
                   ),
                   Container(
+                    padding: const EdgeInsets.only(left: 20),
                     width: double.infinity,
                     height: 50,
-                    color: Appcolors.primaryColor,
+                    decoration: BoxDecoration(
+                      color: Appcolors.offWhiteColor1,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              specialized,
+                              style: getmeduimfont(),
+                            )
+                          ],
+                        ),
+                        DropdownButton(
+                          icon: const Icon(
+                            Icons.arrow_drop_down_circle_outlined,
+                            color: Colors.blue,
+                          ),
+                          items: specializations.map((String value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              specialized = value!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   const Gap(10),
                   const Row(
@@ -258,5 +305,15 @@ class _CompleteRegisterState extends State<CompleteRegister> {
         ),
       ),
     );
+  }
+
+  pickImage() async {
+    final pickImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickImage != null) {
+      setState(() {
+        imagePath = pickImage.path;
+      });
+    }
   }
 }

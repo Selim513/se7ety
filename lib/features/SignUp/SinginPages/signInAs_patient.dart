@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:se7ety_app_1/core/font/app_font.dart';
+import 'package:se7ety_app_1/core/function/email_validate.dart';
 import 'package:se7ety_app_1/core/function/navigator.dart';
 import 'package:se7ety_app_1/core/utils/app_color.dart';
 import 'package:se7ety_app_1/features/SignUp/SinginPages/Sing_Up_patient.dart';
@@ -74,9 +75,12 @@ class _PatientSigninState extends State<SignInPage> {
                     TextFormField(
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'You should enter your email';
+                          return 'قم بادخال الايميل الخاص بك';
+                        } else if (!emailValidate(value)) {
+                          return 'من فضلك ادخل الايميل صحيحا';
+                        } else {
+                          return null;
                         }
-                        return null;
                       },
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
@@ -91,7 +95,9 @@ class _PatientSigninState extends State<SignInPage> {
                     TextFormField(
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Enter your Password';
+                          return 'ادخل الرقم السري من';
+                        } else if (value.length <= 6) {
+                          return 'ادخل رقم سري صحيح';
                         }
                         return null;
                       },
@@ -123,9 +129,9 @@ class _PatientSigninState extends State<SignInPage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Appcolors.primaryColor,
                           ),
-                          onPressed: () async{
-                            if (fromKey.currentState!.validate()){
-                            await  context.read<AuthCubit>().Login(
+                          onPressed: () async {
+                            if (fromKey.currentState!.validate()) {
+                              await context.read<AuthCubit>().Login(
                                   emailController.text,
                                   passwordController.text);
                             }
